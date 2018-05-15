@@ -1,5 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// Site
+$lang['save']                 = 'Simpan';
+
 // Home
 $lang['our_product']        = 'Produk Kami';
 $lang['shipping_to']        = 'Bisa dikirim kemana aja';
@@ -21,6 +24,12 @@ $lang['seller']                 = 'Penjual';
 $lang['categories']             = 'Kategori';
 $lang['description']            = 'Deskripsi';
 $lang['additional_information'] = "Informasi Tambahan";
+$lang['shopping_cost']          = 'Ongkos Kirim';
+$lang['proceed_to_payment']     = 'Proses Pembayaran';
+$lang['order_summary']          = "Detail Pesanan";
+$lang['delivery_information']   = "Informasi Pengiriman";
+$lang['continue_shopping']      = '<i class="fa fa-long-arrow-left fa-fw"></i> &nbsp; Kembali belanja';
+$lang['proceed_to_checkout']    = 'Pembayaran &nbsp; <i class="fa fa-long-arrow-right fa-fw"></i>';
 
 // Admin
 $lang['add_product']    = 'Tambah Produk';

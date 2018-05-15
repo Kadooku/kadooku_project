@@ -3,8 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Product_model extends CI_Model {
 
-    var $table = 'products';
-    var $pk    = 'id';
+    var $table      = 'products';
+    var $pk         = 'id';
+    var $categories = 'categories';
 
     /**
      * Description :
@@ -33,6 +34,41 @@ class Product_model extends CI_Model {
 		$query = $this->db->get();
         
 		return $query;
+    }
+
+     /**
+     * Description :
+     * Fungsi model untuk mengambil data kategori dari database
+     * @param {array} $where
+     * @author Rangga Djatikusuma Lukman
+     */
+    public function get_categories($where=NULL)
+    {
+        $this->db->from($this->categories);
+        
+        if($where)
+            $this->db->where($where);
+
+		$query = $this->db->get();
+        
+		return $query;
+    }
+
+    public function get_detail($slug)
+    {
+        $this->db->select("{$this->table}.*, {$this->categories}.category_name, {$this->categories}.category_url");
+        $this->db->from($this->table); 
+        $this->db->join($this->categories, "{$this->table}.category_id={$this->categories}.id", 'left');
+        $this->db->where("{$this->table}.product_url", $slug);
+        $query = $this->db->get();
+
+        return $query;
+    }
+
+    public function getProductImage($id)
+    {
+        $get = $this->db->get_where($this->table, array($this->pk => $id))->row();
+        return json_decode($get->product_image);
     }
 
 }

@@ -59,7 +59,6 @@ Class Facebook
         $this->load->config('facebook');
 
         // Load required libraries and helpers
-        $this->load->library('session');
         $this->load->helper('url');
 
         if (!isset($this->fb))

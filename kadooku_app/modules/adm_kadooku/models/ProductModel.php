@@ -40,7 +40,7 @@ class ProductModel extends CI_Model {
     public function get_json() {
         $this->datatables->select('id, product_name, concat("Rp. ", format(product_price, 0)) as product_price, product_amount');
         $this->datatables->from($this->table);
-        $this->datatables->add_column('action', '<a href="product/edit/$1" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a> &nbsp; <a href="#delete?id=$1" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>', 'id');
+        $this->datatables->add_column('action', '<a href="product/edit/$1" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a> &nbsp; <button data-id="$1" id="product-delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>', 'id');
         return $this->datatables->generate();
     }
 
@@ -59,6 +59,38 @@ class ProductModel extends CI_Model {
             return false;
         }
     }
+
+    /**
+     * Description :
+     * Fungsi model untuk mengubah data
+     * @created 21 April 2018
+     * @param {array} data inputan
+     * @author Rangga Djatikusuma Lukman
+     */
+    public function update($data, $where=NULL){
+		if($where)
+            $this->db->where($where);
+
+        $this->db->set($data);
+		if($this->db->update($this->table,$data)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    /**
+     * Description :
+     * Fungsi model untuk menghapus data data
+     * @created 22 April 2018
+     * @param {array} data inputan
+     * @author Rangga Djatikusuma Lukman
+     */
+    public function delete($where=NULL){
+		if($where)
+            $this->db->where($where);
+		$this->db->delete($this->table);
+	}
 
     /**
      * Description :

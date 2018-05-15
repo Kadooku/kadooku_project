@@ -20,6 +20,24 @@ class Home extends CI_Controller {
         $this->template->load('public/template', 'home_view');
     }
 
+    public function change_language($lang = 'ID')
+    {
+        $url = $this->input->get('redirect');
+        switch($lang){
+            case 'en' : 
+                $this->session->set_userdata('language', 'english');
+                break;
+            
+            default : 
+                $this->session->set_userdata('language', 'indonesia');
+                break;
+        }
+
+        
+        redirect(base_url($url),'refresh');
+        
+    }
+
     
 
 }

@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'email', 'session', 'Template');
+$autoload['libraries'] = array('database', 'email', 'session', 'Template', 'cart');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'file', 'language', 'form');
+$autoload['helper'] = array('url', 'file', 'language', 'form', 'kadooku_helper');
 
 /*
 | -------------------------------------------------------------------

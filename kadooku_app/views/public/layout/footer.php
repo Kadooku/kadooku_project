@@ -1,4 +1,39 @@
-    <!-- Footer -->
+	<!-- Shipping -->
+	<section class="shipping bgwhite p-t-62 p-b-46" id="footer-list">
+		<div class="flex-w p-l-15 p-r-15">
+			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
+				<h4 class="m-text12 t-center">
+					<?=lang('shipping_to');?>
+				</h4>
+
+				<span class="s-text11 t-center">
+					<?=lang('desc_shipping_to');?>
+				</span>
+			</div>
+
+			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 bo2 respon2">
+				<h4 class="m-text12 t-center">
+					<?=lang('shipping_time');?>
+				</h4>
+
+				<span class="s-text11 t-center">
+					<?=lang('desc_shipping_time');?>
+				</span>
+			</div>
+
+			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
+				<h4 class="m-text12 t-center">
+					<?=lang('price_sell');?>
+				</h4>
+
+				<span class="s-text11 t-center">
+					<?=lang('desc_price_sell');?>
+				</span>
+			</div>
+		</div>
+	</section>
+ 
+ <!-- Footer -->
 	<footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45">
 		<div class="t-center p-l-15 p-r-15">
 			<a href="#">

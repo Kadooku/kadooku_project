@@ -12,7 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>libs/assets/animate.css/animate.css" type="text/css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>css/bootstrap-treeview.css" type="text/css" />
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="<?=base_url('kadooku_assets/admin/');?>plugins/sweetalert/sweetalert.css">
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>css/style.css?_=<?=time('YmdGis');?>" type="text/css" />  
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>css/color.palete.css?_=<?=time('YmdGis');?>" type="text/css" />
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>custom/select2/dist/css/select2.min.css" type="text/css" />
@@ -136,11 +138,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <script src='<?=base_url('kadooku_assets/admin/');?>custom/fullcalendar/lib/moment.min.js'></script>
 <script src='<?=base_url('kadooku_assets/admin/');?>plugins/moment/moment-with-locales.min.js'></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<script src="<?=base_url('kadooku_assets/admin/');?>js/bootstrap-treeview.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>js/ui-nav.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>js/ui-toggle.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>custom//select2/dist/js/select2.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/plugins/');?>tinymce/js/tinymce/jquery.tinymce.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/plugins/');?>tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="<?=base_url('kadooku_assets/admin/plugins/');?>sweetalert/sweetalert.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>libs/jquery/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>libs/jquery/plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>js/app.js?_=<?=time('YmdGis');?>"></script>

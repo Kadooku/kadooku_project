@@ -39,97 +39,68 @@
 				<div class="wrap_menu">
 					<nav class="menu">
 						<ul class="main_menu">
-							<!-- <li>
-								<a href="index.html">Home</a>
-							</li> -->
+							<li>
+								<a href="<?=base_url();?>">Home</a>
+							</li>
+							<?php $cat = $this->db->get_where('categories', array('parent_id' => 0))->result();?>
+						<?php foreach($cat as $c): ?>
+							<?php $sub_menu = $this->db->get_where('categories', array('parent_id' => $c->id));
+							if($sub_menu->num_rows() > 0) :?>
+								<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false"><?=$c->category_name;?></a>
+								<ul class="header-cat dropdown-menu dropdown-menu-left">
+									<?php foreach($sub_menu->result() as $sub) : ?>
+									<li><a href="<?=base_url('product?category='.$sub->category_url);?>"><?=$sub->category_name;?></a></li>
+									<?php endforeach;?>
+								</ul>
+								</li>
+							<?php else :?>
+								<li><a href="<?=base_url('product?category='.$c->category_url);?>"><?=$c->category_name;?></a></li>
+							<?php endif;?>
+						<?php endforeach;?>
 						</ul>
 					</nav>
 				</div>
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="<?=base_url('kadooku_assets/public/');?>images/icons/user-icon.png" class="header-icon1" alt="ICON">
-					</a>
-
-					<span class="linedivide1"></span>
-
+				<?php $user = $this->session->userdata('userData');
+					if($user['login_status'] == TRUE):?>
 					<div class="header-wrapicon2">
-						<img src="<?=base_url('kadooku_assets/public/');?>images/icons/shopping-cart-24.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
-
-						<!-- Header cart noti -->
+						<a href="#" class="dropdown-toggle header-wrapicon1 dis-block js-show-header-dropdown" style="color:#fff;">
+							<img src="<?=base_url('kadooku_assets/public/');?>images/icons/user-icon.png" class="header-icon1" alt="ICON">
+							<?php echo $user['username'];?>
+						</a>
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="<?=base_url('kadooku_assets/public/');?>images/item-cart-01.jpg" alt="IMG">
+										<img src="<?php echo $user['profile_picture'];?>" width="50" height="50" alt="IMG">
 									</div>
 
 									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
+										<?php echo $user['full_name'];?>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="<?=base_url('kadooku_assets/public/');?>images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="<?=base_url('kadooku_assets/public/');?>images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
+											<a href="<?=$user['isSocialLogin'] ? base_url('social_login/logout') : base_url('user/logout');?>">Logout</a>
 										</span>
 									</div>
 								</li>
 							</ul>
-
-							<div class="header-cart-total">
-								Total: $75.00
-							</div>
-
-							<div class="header-cart-buttons">
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
-									</a>
-								</div>
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
-									</a>
-								</div>
-							</div>
 						</div>
+					</div>
+					<span class="linedivide1"></span>
+				<?php else:?>
+					<a href="<?=base_url('user/login');?>" class="header-wrapicon1 dis-block" style="color:#fff;">
+						Login/Register
+					</a>
+					<span class="linedivide1"></span>
+				<?php endif;?>
+					<div class="header-wrapicon2">
+						<a href="<?=base_url('cart');?>">
+							<img src="<?=base_url('kadooku_assets/public/');?>images/icons/shopping-cart-24.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						</a>
+						<span class="header-icons-noti"><?=$this->cart->total_items();?></span>
 					</div>
 				</div>
 			</div>
@@ -146,88 +117,37 @@
 			<div class="btn-show-menu">
 				<!-- Header Icon mobile -->
 				<div class="header-icons-mobile">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="<?=base_url('kadooku_assets/public/');?>images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
-
-					<span class="linedivide2"></span>
-
+				<?php $user = $this->session->userdata('userData');
+					if($user['login_status'] == TRUE):?>
 					<div class="header-wrapicon2">
-						<img src="<?=base_url('kadooku_assets/public/');?>images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
-
-						<!-- Header cart noti -->
+						<div class="header-wrapicon1 dis-block js-show-header-dropdown" style="color:#fff;">
+							<img src="<?=base_url('kadooku_assets/public/');?>images/icons/user-icon.png" class="header-icon1" alt="ICON">
+						</div>
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="<?=base_url('kadooku_assets/public/');?>images/item-cart-01.jpg" alt="IMG">
+										<img src="<?php echo $user['profile_picture'];?>" width="50" height="50" alt="IMG">
 									</div>
 
 									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
+										<?php echo $user['full_name'];?>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="<?=base_url('kadooku_assets/public/');?>images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="<?=base_url('kadooku_assets/public/');?>images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
+											<a href="<?=$user['isSocialLogin'] ? base_url('social_login/logout') : base_url('user/logout');?>">Logout</a>
 										</span>
 									</div>
 								</li>
 							</ul>
-
-							<div class="header-cart-total">
-								Total: $75.00
-							</div>
-
-							<div class="header-cart-buttons">
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
-									</a>
-								</div>
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
-									</a>
-								</div>
-							</div>
 						</div>
+					</div>
+					<span class="linedivide1"></span>
+				<?php endif;?>
+					<div class="header-wrapicon2">
+						<a href="<?=base_url('cart');?>">
+							<img src="<?=base_url('kadooku_assets/public/');?>images/icons/shopping-cart-24.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						</a>
+						<span class="header-icons-noti"><?=$this->cart->total_items();?></span>
 					</div>
 				</div>
 
@@ -258,10 +178,30 @@
 							</div>
 						</div>
 					</li>
-
+					<?php if($user['login_status'] == FALSE):?>
+						<li class="item-menu-mobile">
+							<a href="<?=base_url('user/login');?>">Login/Register</a>
+						</li>
+					<?php endif;?>
 					<li class="item-menu-mobile">
 						<a href="<?=base_url();?>">Home</a>
 					</li>
+					<?php $cat = $this->db->get_where('categories', array('parent_id' => 0))->result();?>
+						<?php foreach($cat as $c): ?>
+							<?php $sub_menu = $this->db->get_where('categories', array('parent_id' => $c->id));
+							if($sub_menu->num_rows() > 0) :?>
+								<li class="dropdown item-menu-mobile">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false"><?=$c->category_name;?></a>
+								<ul class="header-cat dropdown-menu dropdown-menu-left">
+									<?php foreach($sub_menu->result() as $sub) : ?>
+									<li><a href="<?=base_url('product?category='.$sub->category_url);?>"><?=$sub->category_name;?></a></li>
+									<?php endforeach;?>
+								</ul>
+								</li>
+							<?php else :?>
+								<li class="item-menu-mobile"><a href="<?=base_url('product?category='.$c->category_url);?>"><?=$c->category_name;?></a></li>
+							<?php endif;?>
+						<?php endforeach;?>
 				</ul>
 			</nav>
 		</div>

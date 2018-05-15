@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Home</title>
+	<title><?=!empty($title) ? "Kadooku - $title" : "KadooKu - Cari Kado mudah";?></title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="<?=base_url('kadooku_assets/public/');?>images/icons/favicon.png"/>
@@ -22,50 +22,23 @@
 
 </head>
 <body class="animsition">
-
-	<?=$this->load->view('public/layout/header');?>
+	
+	<?php if(!in_array($this->uri->segment(2), array('login', 'register'))){
+		echo $this->load->view('public/layout/header');
+	}?>
 
 	<?=$contents;?>
 
-	<!-- Shipping -->
-	<section class="shipping bgwhite p-t-62 p-b-46">
-		<div class="flex-w p-l-15 p-r-15">
-			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
-				<h4 class="m-text12 t-center">
-					<?=lang('shipping_to');?>
-				</h4>
+	<?php if(!in_array($this->uri->segment(2), array('login', 'register'))){
+		echo $this->load->view('public/layout/footer');
+	}?>
 
-				<span class="s-text11 t-center">
-					<?=lang('desc_shipping_to');?>
-				</span>
-			</div>
-
-			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 bo2 respon2">
-				<h4 class="m-text12 t-center">
-					<?=lang('shipping_time');?>
-				</h4>
-
-				<span class="s-text11 t-center">
-					<?=lang('desc_shipping_time');?>
-				</span>
-			</div>
-
-			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
-				<h4 class="m-text12 t-center">
-					<?=lang('price_sell');?>
-				</h4>
-
-				<span class="s-text11 t-center">
-					<?=lang('desc_price_sell');?>
-				</span>
-			</div>
-		</div>
-	</section>
-
-
-	<?=$this->load->view('public/layout/footer');?>
     <input type="hidden" id="base_url" value="<?=base_url();?>">
     <input type="hidden" id="cart" value="<?=lang('add_to_cart');?>">
+	<!-- Container Selection -->
+	<div id="dropDownSelect1"></div>
+	<div id="dropDownSelect2"></div>
+
 
 	<script type="text/javascript" src="<?=base_url('kadooku_assets/public/');?>vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="<?=base_url('kadooku_assets/public/');?>vendor/animsition/js/animsition.min.js"></script>
@@ -77,6 +50,7 @@
 	<script type="text/javascript" src="<?=base_url('kadooku_assets/public/');?>vendor/countdowntime/countdowntime.js"></script>
 	<script type="text/javascript" src="<?=base_url('kadooku_assets/public/');?>vendor/lightbox2/js/lightbox.min.js"></script>
 	<script type="text/javascript" src="<?=base_url('kadooku_assets/public/');?>vendor/sweetalert/sweetalert.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="<?=base_url('kadooku_assets/public/');?>js/main.js"></script>
 	<script src="<?=base_url('kadooku_assets/public/');?>vendor/lazy/lazyload.min.js"></script>
 	<script src="<?=base_url('kadooku_assets/public/');?>js/endless-scroll.js"></script>

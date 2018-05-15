@@ -15,26 +15,90 @@
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
 					<div class="leftbar p-r-20 p-r-0-sm">
-                        <div class="search-product pos-relative bo4 of-hidden">
-							<input class="s-text7 size6 p-l-23 p-r-50" type="text" name="search-product" placeholder="Search Products...">
+						<div class="search-product pos-relative bo4 of-hidden">
+							<form action="" method="GET">
+								<?php if(!empty($this->input->get('category'))) : ?>
+									<input type="hidden" name="category" value="<?=$this->input->get('category');?>">
+								<?php endif;?>
+								<?php if(!empty($this->input->get('sort'))) : ?>
+									<input type="hidden" name="sort" value="<?=$this->input->get('sort');?>">
+								<?php endif;?>
+								<?php if(!empty($this->input->get('minPrice'))) : ?>
+									<input type="hidden" name="minPrice" value="<?=$this->input->get('minPrice');?>">
+								<?php endif;?>
+								<?php if(!empty($this->input->get('maxPrice'))) : ?>
+									<input type="hidden" name="maxPrice" value="<?=$this->input->get('maxPrice');?>">
+								<?php endif;?>
+								<input class="s-text7 size1 p-l-23 p-r-50" type="text" name="q" 
+										value="<?=empty($this->input->get('q')) ? '' : $this->input->get('q');?>" 
+										placeholder="Search Products...">
 
-							<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
-								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
-							</button>
+								<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+									<i class="fs-12 fa fa-search" aria-hidden="true"></i>
+								</button>
+							</form>
                         </div>
-                        
-						<!--  -->
-						<h4 class="m-text14 p-b-7">
+
+						<!-- List Category -->
+						<br>
+						<h4 class="m-text14 p-b-7" style="border-bottom:1px dotted #eee">
 							<?=lang('categories');?>
 						</h4>
 
 						<ul class="p-b-54">
 							<li class="p-t-4">
-								<a href="#" class="s-text13 active1">
+								<a href="<?=base_url('product');?>" class="s-text13">
 									Semua
 								</a>
 							</li>
+						<?php foreach($categories as $c): ?>
+							<?php if($c->parent_id == 0) :?>
+							<li class="p-t-4">
+								<b><?=$c->category_name;?></b>
+							</li>
+							<?php else :?>
+							<li class="p-l-15 p-t-4">
+								<?=($this->input->get('category') == $c->category_url) ? 
+									$c->category_name : '<a href="'.base_url('product?category='.$c->category_url).'">'.$c->category_name.'</a>';?>
+							</li>
+							<?php endif;?>
+						<?php endforeach;?>
 						</ul>
+
+						<!-- Filter -->
+						<span class="s-text13"><b>Filter Harga</b></span>						
+						<form action="" method="GET">
+							<div class="row">
+								<?php if(!empty($this->input->get('category'))) : ?>
+									<input type="hidden" name="category" value="<?=$this->input->get('category');?>">
+								<?php endif;?>
+								<?php if(!empty($this->input->get('sort'))) : ?>
+									<input type="hidden" name="sort" value="<?=$this->input->get('sort');?>">
+								<?php endif;?>
+								<?php if(!empty($this->input->get('q'))) : ?>
+									<input type="hidden" name="q" value="<?=$this->input->get('q');?>">
+								<?php endif;?>
+								<div class="col-md-6">
+									<div class="bo4 of-hidden">
+										<input type="text" name="minPrice" class="s-text7 size1 p-l-10 p-r-10"
+												value="<?=empty($this->input->get('minPrice')) ? '' : $this->input->get('minPrice');?>" 
+												placeholder="RP MIN">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="bo4 of-hidden">
+										<input type="text" name="maxPrice" class="s-text7 size1 p-l-10 p-r-10" 
+												value="<?=empty($this->input->get('maxPrice')) ? '' : $this->input->get('maxPrice');?>"
+												placeholder="RP MAX">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4 m-t-10">
+										Terapkan
+									</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 
@@ -42,23 +106,18 @@
 					<!--  -->
 					<div class="flex-sb-m flex-w p-b-35">
 						<div class="flex-w">
-							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-								<select class="s-text7 size6 p-l-23 p-r-50" name="sorting">
+							<div class="rs2-select2 bo4 of-hidden w-size12 s-text7 m-t-5 m-b-5 m-r-10">
+								<select class="selection-2 size1 p-l-23 p-r-50" name="sorting">
 									<option>Urutkan</option>
-								</select>
-							</div>
-
-							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-								<select class="s-text7 size6 p-l-23 p-r-50" name="sorting">
-									<option>Harga</option>
-
+									<option value="ASC" 
+										<?=($this->input->get('sort') == 'ASC') ? 'selected' : ''?>>
+										Harga: Rendah ke Tinggi</option>
+									<option value="DESC"
+										<?=($this->input->get('sort') == 'DESC') ? 'selected' : ''?>
+										>Harga: Tinggi ke Rendah</option>
 								</select>
 							</div>
 						</div>
-
-						<!-- <span class="s-text8 p-t-5 p-b-5">
-							Showing 1–12 of 16 results
-						</span> -->
 					</div>
 
 					<!-- Product -->
