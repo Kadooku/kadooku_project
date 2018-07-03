@@ -65,7 +65,8 @@
 				<!-- Header Icon -->
 				<div class="header-icons">
 				<?php $user = $this->session->userdata('userData');
-					if($user['login_status'] == TRUE):?>
+					if($user['login_status'] == TRUE):
+					$getUser = $this->db->get_where('users', array('username' => $user['username']))->row_array();?>
 					<div class="header-wrapicon2">
 						<a href="#" class="dropdown-toggle header-wrapicon1 dis-block js-show-header-dropdown" style="color:#fff;">
 							<img src="<?=base_url('kadooku_assets/public/');?>images/icons/user-icon.png" class="header-icon1" alt="ICON">
@@ -75,11 +76,15 @@
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="<?php echo $user['profile_picture'];?>" width="50" height="50" alt="IMG">
+										<a href="<?=base_url('user');?>">
+											<img src="<?php echo $user['profile_picture'];?>" width="50" height="50" alt="IMG">
+										</a>
 									</div>
 
 									<div class="header-cart-item-txt">
-										<?php echo $user['full_name'];?>
+										<a href="<?=base_url('user');?>">
+											<?php echo $getUser['full_name'];?>
+										</a>
 
 										<span class="header-cart-item-info">
 											<a href="<?=$user['isSocialLogin'] ? base_url('social_login/logout') : base_url('user/logout');?>">Logout</a>
@@ -118,7 +123,8 @@
 				<!-- Header Icon mobile -->
 				<div class="header-icons-mobile">
 				<?php $user = $this->session->userdata('userData');
-					if($user['login_status'] == TRUE):?>
+					if($user['login_status'] == TRUE):
+					$getUser = $this->db->get_where('users', array('username' => $user['username']))->row_array();?>
 					<div class="header-wrapicon2">
 						<div class="header-wrapicon1 dis-block js-show-header-dropdown" style="color:#fff;">
 							<img src="<?=base_url('kadooku_assets/public/');?>images/icons/user-icon.png" class="header-icon1" alt="ICON">
@@ -127,11 +133,15 @@
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="<?php echo $user['profile_picture'];?>" width="50" height="50" alt="IMG">
+										<a href="<?=base_url('user');?>">
+											<img src="<?php echo $user['profile_picture'];?>" width="50" height="50" alt="IMG">
+										</a>
 									</div>
 
 									<div class="header-cart-item-txt">
-										<?php echo $user['full_name'];?>
+										<a href="<?=base_url('user');?>">
+											<?php echo $getUser['full_name'];?>
+										</a>
 
 										<span class="header-cart-item-info">
 											<a href="<?=$user['isSocialLogin'] ? base_url('social_login/logout') : base_url('user/logout');?>">Logout</a>

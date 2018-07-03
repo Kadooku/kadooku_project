@@ -4,12 +4,8 @@
   </div>
 </div>
 <div class="form">
-  <div class="thumbnail"><img src="https://2.bp.blogspot.com/-jt8t6lt0kck/UmTwtSffyhI/AAAAAAAADCU/hJEE7zZireY/s1600/Logo-Pemerintah-Kota-Bandung-transparent.png" style="margin-top: -10px" /></div>
+  <div class="thumbnail"><img src="" style="margin-top: -10px" /></div>
   <form class="register-form" action="">
-    <!--<input type="text" placeholder="name"/>
-    <input type="password" placeholder="password"/>
-    <input type="text" placeholder="email address"/>
-    <button>create</button>-->
     Jika anda lupa password untuk login, mohon menghubungi Admin Website untuk dapat mengakses member panel, Terimakasih.
     <p class="message">Tidak Lupa? <a href="#">Sign In</a></p>
   </form>

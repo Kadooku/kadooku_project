@@ -11,7 +11,11 @@ class Category extends CI_Controller {
         //set kategori
         $this->parent_category();
 
-        $data['kategori'] = $this->kategori;
+        $this->load->model('ProductModel');
+        $query = $this->ProductModel->get_categories(array('parent_id' => 0));
+
+        $data['kategori']     = $this->kategori;
+        $data['listCategory'] = $query->result();
         $this->template->load('backend/template', 'category/category_view', $data);
     }
 
@@ -61,8 +65,7 @@ class Category extends CI_Controller {
 				foreach ($query->result_array() as $c) {
 					$this->kategori .= "<li style=\"margin-bottom:5px\">";
 					$this->kategori .= "<div class=\"$warna label label-default label-lg\">
-                                            <a href=\"#\" id=\"add_category\" data-id=\"$c[id]\" data-name=\"$c[category_name]\"><i class=\"fa fa-plus\"></i></a>&nbsp;
-                                                $c[category_name] &nbsp;
+                                            $c[category_name] &nbsp;
                                             <a href=\"#\" id=\"edit_category\" data-id=\"$c[id]\" data-name=\"$c[category_name]\"><i class=\"fa fa-pencil\"></i></a>&nbsp;
                                             <a href=\"#\" id=\"delete_category\" data-id=\"$c[id]\" data-name=\"$c[category_name]\"><i class=\"fa fa-trash\"></i></a>
                                         </div>";

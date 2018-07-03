@@ -11,13 +11,16 @@ class User_model extends CI_Model {
     protected $pk = 'id';
     
     public function checkUser($data = array()){
-        $this->db->select($this->pk);
+        $this->db->select('*');
         $this->db->from($this->table);
         $this->db->where(array('social_login'=>$data['social_login'],'oauth_uid'=>$data['oauth_uid']));
         $prevQuery = $this->db->get();
         $prevCheck = $prevQuery->num_rows();
 
         if($prevCheck > 0){
+            $get = $prevQuery->row();
+            $data['full_name'] = $get->full_name;
+            $data['gender']    = $get->gender;
             $prevResult = $prevQuery->row_array();
             $update     = $this->db->update($this->table, $data, array('id'=>$prevResult['id']));
             $userID     = $prevResult['id'];
@@ -41,6 +44,18 @@ class User_model extends CI_Model {
             return $data.$prevCheck++;
         }else{
             return $data;
+        }
+    }
+
+    public function update($data, $where=NULL){
+		if($where)
+            $this->db->where($where);
+
+        $this->db->set($data);
+		if($this->db->update($this->table, $data)){
+            return true;
+        }else{
+            return false;
         }
     }
 

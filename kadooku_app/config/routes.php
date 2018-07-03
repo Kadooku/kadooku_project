@@ -53,4 +53,24 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['product_detail/(:any)']  = 'product/detail/$1';
+/* ROUTE PRODUCT */
+$route['product_detail/(:any)'] = 'ProductController/getDetailBySlug/$1';
+$route['product']        = 'ProductController/index';
+$route['product/(:any)']        = 'ProductController/$1';
+$route['product/(:any)/(:any)'] = 'ProductController/$1/$2';
+
+/* ROUTE CART */
+$route['order-received/(:any)'] = 'CartController/order/index/$1';
+$route['cart']                  = 'CartController/index';
+$route['cart/update_cart']      = 'CartController/updateCart';
+$route['cart/add_to_cart']      = 'CartController/addToCart';
+$route['cart/remove_cart']      = 'CartController/removeCart';
+$route['cart/(:any)']           = 'CartController/$1';
+$route['cart/(:any)/(:any)']    = 'CartController/$1/$2';
+
+/* ROUTE CART */
+$route['user']                             = 'UserController/index';
+$route['user/(:any)']                      = 'UserController/$1';
+$route['user/(:any)/(:any)']               = 'UserController/$1/$2';
+$route['user/(:any)/(:any)/(:any)']        = 'UserController/$1/$2/$3';
+$route['user/(:any)/(:any)/(:any)/(:any)'] = 'UserController/$1/$2/$3/$4';

@@ -6,6 +6,7 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.hash_function', 1);
 ini_set('session.hash_bits_per_character', 4);
 session_start();
+date_default_timezone_set("Asia/Jakarta");
 /**
  * CodeIgniter
  *

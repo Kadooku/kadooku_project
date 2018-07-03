@@ -1,7 +1,6 @@
 /* 
 */
-/*@import url(../fonts/mighticon/mighticon.css);
-@import url(../fonts/erkicon/erkicon.css);*/
+/*@import url(../fonts/mighticon/mighticon.css);*/
 html {
   background-color: #f0f3f4;
 }
@@ -5483,7 +5482,7 @@ a.text-#000000:hover {
 /* Datatable Pagination */
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{  
   background-color: #555b70;
-  /*border-color: #555b70;*/
+  /* border-color: #555b70; */
 }
 .pagination > li > a, .pagination > li > span{
   color: #555b70;
@@ -5980,7 +5979,7 @@ table.dataTable tfoot > tr > .th_search i{
   visibility: visible;
 }
 .table-striped > tbody > tr > td{
-  padding: 25px !important;
+  padding: 10px !important;
   font-size: 14px;
   color: #555b70;  
   border-right: 1px solid #ebebeb;
@@ -6042,7 +6041,7 @@ table.dataTable{
   font-size: 14px;
 }
 .pagination > li:first-child > a, .pagination > li:first-child > span,.pagination > li > a, .pagination > li > span{
-  /*border:none;*/
+  border:none;
 }
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
   background:none;

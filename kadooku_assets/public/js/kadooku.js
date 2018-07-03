@@ -14,6 +14,23 @@ $(document).ready(function(){
 //  angka 3000 dibawah ini artinya pesan akan hilang dalam 3 detik setelah muncul
     setTimeout(function(){$(".notif").fadeOut('slow');}, 5000);
     
+    var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    var birthday = $('#datepicker').val();
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap4',
+        maxDate: today,
+        format: 'dd mmmm yyyy',
+        value: birthday
+    });
+
+    $('#accordion').on('hidden.bs.collapse', toggleChevron);
+    $('#accordion').on('shown.bs.collapse', toggleChevron);
+
+
+    $('.no-open-lmao').collapse({
+    toggle: false
+    })
+
     $(".selection-1").select2({
         dropdownParent: $('#dropDownSelect1')
     });
@@ -21,6 +38,22 @@ $(document).ready(function(){
     $(".selection-2").select2({
         minimumResultsForSearch: 20,
         dropdownParent: $('#dropDownSelect2')
+    });
+    
+
+    $(".selection-3").select2({
+        dropdownParent: $('#dropDownSelect2')
+    });
+    
+    $(".selection-address").select2({
+        dropdownParent: $('.bd-address-modal-lg')
+    });
+
+    $('#address-datatable').DataTable({
+        "ordering": false,
+        "bInfo" : false,
+        "bLengthChange": false,
+        "searching" : false
     });
 
     // Radio box border
@@ -178,7 +211,36 @@ function setProduct(data, pages){
     
     return output;
 }
+function Timer(duration, display) 
+{
+    var timer = duration, hours, minutes, seconds;
+    setInterval(function () {
+        hours = parseInt((timer /3600)%24, 10)
+        minutes = parseInt((timer / 60)%60, 10)
+        seconds = parseInt(timer % 60, 10);
 
+				hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.text(hours +":"+minutes + ":" + seconds);
+
+				--timer;
+    }, 1000);
+}
+jQuery(function ($) 
+{
+    var twentyFourHours = $('#countdown').data('time');
+    var display = $('#countdown');
+    Timer(twentyFourHours, display);
+});
+
+function toggleChevron(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find("i.indicator")
+        .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+}
 
 
 // fungsi internal website
@@ -193,7 +255,7 @@ $(document).ready(function () {
         var max   = getUrlParameter('maxPrice') ? "&maxPrice="+getUrlParameter('maxPrice') : "";
         var sort  = getUrlParameter('sort') ? "&sort="+getUrlParameter('sort') : "";
         var pages = 1;
-        loadMoreData("product/get_list?"+cat+max+min+q+sort, 'product');
+        loadMoreData("product/getList?"+cat+max+min+q+sort, 'product');
         
         $(window).endlessScroll({
             pagesToKeep: 5,
@@ -202,10 +264,10 @@ $(document).ready(function () {
             loader: '<div class="ajax-load text-center" style="display:none"></div>',
             content: function(i) {
                 i=i+1;
-                loadMoreData("product/get_list?page="+i+cat+max+min+q+sort, 'product');
+                loadMoreData("product/getList?page="+i+cat+max+min+q+sort, 'product');
             },
             ceaseFire: function(i) {
-                if(checkMore("product/get_list?page="+i+cat+max+min+q+sort) === 1){
+                if(checkMore("product/getList?page="+i+cat+max+min+q+sort) === 1){
                     return true;
                 }else{
                     return false;
@@ -216,14 +278,73 @@ $(document).ready(function () {
         // Fungsi untuk mengambil list all product
         $('#loading-image').show();
         $('#list-product').empty();
-        loadMoreData("product/get");        
+        loadMoreData("product/getJson");        
     }
 
     // fungsi payment
+function get_cost(id){
+    var subtotal = $('#subtotal-py').val();
+    $.ajax({
+        method : 'post',
+        url : base_url+'cart/json/getAddress',
+        data:{address_id:id},
+        success: function(res){
+            
+            var row   = res.data[0];
+            var cost  = row != null ? parseInt(row.reg) : 20000;
+            var total = parseInt(subtotal) + cost;
+
+            $("#shipping-cost").fadeOut("fast", function(){
+                $(this).empty();
+            });
+            $("#shipping-cost").fadeIn("fast", function(){
+                $(this).append(convertToRupiah(cost));
+            });
+
+            $("#total-payment").fadeOut("fast", function(){
+                $(this).empty();
+            });
+            $("#total-payment").fadeIn("fast", function(){
+                $(this).append(convertToRupiah(total));
+            });
+            $("#totalpayment").val(total);
+        }
+    });
+}
+        // get cost without select new address
+        var address_id = $("#address_id").val();
+        get_cost(address_id);
+
+        $("#address_id").on("change", function(){
+            get_cost(this.value);
+        });
+        if($('input:radio[id=old_address]').is(':checked')) {
+            $("#old-address").show();
+            $("#new-address").hide();
+        }
+
+        if($('input:radio[id=new_address]').is(':checked')) {
+            $("#old-address").hide();
+            $("#new-address").show();
+        }
+
+        $('#old_address').click(function() {
+            $("#old-address").show();
+            $("#new-address").hide();
+            // get cost without select new address
+            var address_id = $("#address_id option:selected").val();
+            get_cost(address_id);
+        });
+        $('#new_address').click(function() {
+            $("#new-address").show();
+            $("#old-address").hide();
+        });
+
+
     // inisialisasi Provinsi
     $.ajax({
         method : 'GET',
-        url : base_url+'cart/json/get_provinces',
+        url : base_url+'cart/json/getProvinces',
         success: function(res){
             var output = "";
             for (var i in res.data){
@@ -239,7 +360,7 @@ $(document).ready(function () {
         if(value>0){
             $.ajax({
                 method : 'post',
-                url : base_url+'cart/json/get_regencies',
+                url : base_url+'cart/json/getRegencies',
                 data:{province_id:value, type:'regencies'},
                 success: function(res){
                     var output = "";
@@ -259,7 +380,7 @@ $(document).ready(function () {
         if(value>0){
             $.ajax({
                 method : 'post',
-                url : base_url+'cart/json/get_districts',
+                url : base_url+'cart/json/getDistricts',
                 data:{regency_id:value, type:'districts'},
                 success: function(res){
                     var output = "";
@@ -279,7 +400,7 @@ $(document).ready(function () {
         if(value>0){
             $.ajax({
                 method : 'post',
-                url : base_url+'cart/json/get_villages',
+                url : base_url+'cart/json/getVillages',
                 data:{district_id:value, type:'villages'},
                 success: function(res){
                     var output = "";
@@ -300,7 +421,7 @@ $(document).ready(function () {
     //         output += "<option value='reg'>Regular</option>";
     //         output += "<option value='oke'>Oke</option>";
     //         output += "<option value='yes'>Yes</option>";
-    //     $( "#logistics" ).empty().append( output );
+    //     $( "#getLogistics" ).empty().append( output );
 
     // });
 
@@ -308,11 +429,11 @@ $(document).ready(function () {
         var subtotal = $('#subtotal-py').val();
         var regency  = $('#regencies option:selected').text();
         var district = $('#districts option:selected').text();
-        //var $type    = $('#logistics option:selected').val();
+        //var $type    = $('#getLogistics option:selected').val();
 
         $.ajax({
             method : 'post',
-            url : base_url+'cart/json/logistics',
+            url : base_url+'cart/json/getLogistics',
             data:{district:district, regency:regency},
             success: function(res){
                 var row = res.data[0];
@@ -332,10 +453,176 @@ $(document).ready(function () {
                 $("#total-payment").fadeIn("fast", function(){
                     $(this).append(convertToRupiah(total));
                 });
+                $("#totalpayment").val(total);
             }
         })
     });
 
+    // Fungsi Edit Address
+    $(this).on("click", "#add-address", function(){
+        $('.bd-address-modal-lg').modal('show');
+        $('.bd-address-modal-lg #form-address').attr('action',base_url+'user/address/add');
+        $( "#inputName" ).val("");
+        $( "#inputPhone" ).val("");
+        $( "#inputAddress" ).val("");
+
+        $('#provinces').prop('selectedIndex',0).prepend("<option value='' selected='selected'>Silahkan pilih provinsi anda</option>");
+        $('#districts').prop('selectedIndex',0).prepend("<option value='' selected='selected'>Silahkan pilih kecamatan anda</option>");
+        $('#regencies').prop('selectedIndex',0).prepend("<option value='' selected='selected'>Silahkan pilih kota/kabupaten anda</option>");
+        $('#villages').prop('selectedIndex',0).prepend("<option value='' selected='selected'>Silahkan pilih kelurahan/desa anda</option>");
+    });
+
+    $(this).on("click", "#delete-address", function(){
+        var id      = $(this).data("id");
+        var user_id = $(this).data("user");
+        var geo     = $(this).data("geo");
+        
+        swal({
+            title:"Hapus Alamat "+geo,
+            text:"Yakin akan menghapus alamat ini?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url : base_url+"user/address/remove_address",
+                        method : "POST",
+                        data : {id: id, user_id:user_id},
+                        success: function(res){
+                            var data = jQuery.parseJSON(res);
+                            if(data.status == true){
+                                // hapus row address
+                                $("tr[data-id='"+id+"']").fadeOut("fast",function(){
+                                    $(this).remove();
+                                });
+                                swal(geo, data.message, "success");
+                            }else{
+                                swal(geo, data.message, "error");
+                            }                
+                        }
+                    });
+                } else {
+                    swal(geo, "Alamat dibatalkan untuk dihapus", "error");
+                }       
+            });
+    });
+
+    $(this).on("click", "#set", function(){
+        var id      = $(this).data("rowid");
+        var user_id = $(this).data("user");
+        var geo     = $(this).data("geo");
+        var temp_id = $("#temp_id").val();
+        // console.log(temp_id);
+        $.ajax({
+            url : base_url+"user/address/set_primary",
+            method : "POST",
+            data : {id: id, user_id:user_id},
+            success: function(res){
+                var data = jQuery.parseJSON(res);
+                if(data.status == true){
+                    // hapus row address
+                    $("#badges").fadeOut("fast",function(){
+                        $(this).remove();
+                    });
+                    
+                    $("td[data-id='name-"+id).fadeIn('fast', function(){
+                        $(this).append('<span id="badges" class="badge badge-pill badge-success">Utama</span>');
+                    });
+
+                    $("#temp_id").val(id);
+
+                    $("button[data-rowid="+id+"]").prop('disabled', true);
+
+                    $("button[data-rowid="+temp_id+"]").removeAttr('disabled');
+                    // swal(name, data.message, "success");
+                }else{
+                    swal(name, data.message, "error");
+                }                
+            }
+        });
+    });
+
+    $(this).on("click", "#edit-address", function(){
+        $('.bd-address-modal-lg').modal('show');
+
+        var id   = $(this).data("id");
+        var user = $(this).data("user");
+
+        $.when(
+            $.ajax({
+                method : 'POST',
+                url : base_url+'user/json/getAddressById',
+                data: {address_id:id, user_id:user}
+            })
+        ).done(function(res){
+            var province_id = res.data[0].province_id;
+            var regency_id  = res.data[0].regency_id;
+            var district_id = res.data[0].district_id;
+            var village_id  = res.data[0].village_id;
+
+            $('.bd-address-modal-lg #form-address').attr('action',base_url+'user/address/update/'+id);
+            $('.bd-address-modal-lg #form-address').append('<input type="hidden" value="'+id+'" name="id">');
+            $( "#inputName" ).val( res.data[0].name );
+            $( "#inputPhone" ).val( res.data[0].phone );
+            $( "#inputAddress" ).val( res.data[0].address );
+            
+
+            $.when(
+                $.ajax({
+                    method : 'GET',
+                    url : base_url+'user/json/getProvinces'
+                }),
+                $.ajax({
+                    method : 'post',
+                    url : base_url+'user/json/getRegencies',
+                    data:{province_id:province_id, type:'regencies'}
+                }),
+                $.ajax({
+                    method : 'post',
+                    url : base_url+'user/json/getDistricts',
+                    data:{regency_id:regency_id, type:'districts'}
+                }),
+                $.ajax({
+                    method : 'post',
+                    url : base_url+'user/json/getVillages',
+                    data:{district_id:district_id, type:'villages'}
+                })
+            ).done(function(province, regency, district, village){
+                var provinces = "";
+                var regencies = "";
+                var districts = "";
+                var villages = "";
+
+                    for (var i in province[0].data){
+                        var row = province[0].data[i];
+                        var selected = (row.id == province_id) ? 'selected' : '';
+                        provinces += "<option value='"+row.id+"' "+selected+">"+row.name+"</option>";
+                    }
+                    for (var i in regency[0].data){
+                        var row = regency[0].data[i];
+                        var selected = (row.id == regency_id) ? 'selected' : '';
+                        regencies += "<option value='"+row.id+"' "+selected+">"+row.name+"</option>";
+                    }
+                    for (var i in district[0].data){
+                        var row = district[0].data[i];
+                        var selected = (row.id == district_id) ? 'selected' : '';
+                        districts += "<option value='"+row.id+"' "+selected+">"+row.name+"</option>";
+                    }
+                    for (var i in village[0].data){
+                        var row = village[0].data[i];
+                        var selected = (row.id == village_id) ? 'selected' : '';
+                        villages += "<option value='"+row.id+"' "+selected+">"+row.name+"</option>";
+                    }
+                
+                    $( "#provinces" ).empty().append( provinces );
+                    $( "#regencies" ).empty().append( regencies );
+                    $( "#districts" ).empty().append( districts );
+                    $( "#villages" ).empty().append( villages );
+            });
+        });        
+    });
 
     // fungsi add product
     $(this).on("click", ".add_to_cart", function(){

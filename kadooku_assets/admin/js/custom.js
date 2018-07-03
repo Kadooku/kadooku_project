@@ -47,6 +47,7 @@ $(this).on("click", "#add_category", function(){
         };
     };
   
+    /* PRODUCT */
     var t = $("#ProductTable").dataTable({
         initComplete: function() {
             var api = this.api();
@@ -94,6 +95,53 @@ $(this).on("click", "#add_category", function(){
         }
     });
 
+    /* TRANSACTION */
+    var t =$('#TransactionTable').DataTable({ 
+ 
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+ 
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "transaction/ajax_list",
+            "type": "POST"
+        },
+ 
+        //Set column definition initialisation properties.
+        "columnDefs": [
+            { 
+                "targets": [ 0 ], //first column / numbering column
+                "orderable": false, //set not orderable
+            },
+        ],
+ 
+    });
+
+    /* CUSTOMER */
+    var t =$('#CustomerTable').DataTable({ 
+ 
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+ 
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "customer/ajax_list",
+            "type": "POST"
+        },
+ 
+        //Set column definition initialisation properties.
+        "columnDefs": [
+            { 
+                "targets": [ 0 ], //first column / numbering column
+                "orderable": false, //set not orderable
+            },
+        ],
+ 
+    });
+
+    /* THUMBNAIL PRODUCT */
     $("#upload-image-1").change(function () {
         showThumbnail(this, '#thumbnail-1');
     });
