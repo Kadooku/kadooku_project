@@ -32,8 +32,22 @@ $(this).on("click", "#add_category", function(){
     console.log($id + " dan "+ $name);
 });
 
+// Admin Transaksi
+$('#select_status').on('change', function() {
+    if(this.value === "sent") $('#tracking_number').show();
+    else $('#tracking_number').hide();
+});
+
+if($("#select_status").find('option:selected').val() === "sent") $('#tracking_number').show();
+else $('#tracking_number').hide();
+
 
 // Fungsi Datatable 
+    $("#category").DataTable({
+        "ordering": false
+    });
+
+
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
         return {
@@ -202,14 +216,42 @@ $(document).on("click","#product-delete", function(e){
         title: "Apakah kamu yakin akan menghapus ini?",
         text: "Data yang dihapus tidak dapat dikembalikan lagi",
         icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Hapus",
-        closeOnConfirm: true,
-    }, function(){
-        swal("Product berhasil dihapus", {
-            icon: "success",
-        });
-        setTimeout(function(){ window.location.href = abc; }, 1000);
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Product berhasil dihapus", {
+                    icon: "success",
+                });
+                setTimeout(function(){ window.location.href = abc; }, 1000);
+            }else{
+                swal("Dibatalkan", "Produk dibatalkan untuk dihapus", "info");
+            }
+    });
+});
+
+$(document).on("click","#category-delete", function(e){
+    e.preventDefault();
+    var id=$(this).attr("data-id");
+    var abc = path+"/delete/"+id;
+
+    swal({
+        title: "Apakah kamu yakin akan menghapus ini?",
+        text: "Data yang dihapus tidak dapat dikembalikan lagi",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Kategori berhasil dihapus", {
+                    icon: "success",
+                });
+                setTimeout(function(){ window.location.href = abc; }, 1000);
+            }else{
+                swal("Dibatalkan", "Kategori dibatalkan untuk dihapus", "info");
+            }
     });
 });
 

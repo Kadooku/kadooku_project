@@ -49,13 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'home';
+$route['default_controller'] = 'HomeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 /* ROUTE PRODUCT */
 $route['product_detail/(:any)'] = 'ProductController/getDetailBySlug/$1';
-$route['product']        = 'ProductController/index';
+$route['product']               = 'ProductController/index';
 $route['product/(:any)']        = 'ProductController/$1';
 $route['product/(:any)/(:any)'] = 'ProductController/$1/$2';
 
@@ -69,8 +69,27 @@ $route['cart/(:any)']           = 'CartController/$1';
 $route['cart/(:any)/(:any)']    = 'CartController/$1/$2';
 
 /* ROUTE CART */
+$route['home']                  = 'HomeController/index';
+$route['home/(:any)']           = 'HomeController/$1';
+$route['home/(:any)/(:any)']    = 'HomeController/$1/$2';
+
+/* USER */
 $route['user']                             = 'UserController/index';
 $route['user/(:any)']                      = 'UserController/$1';
 $route['user/(:any)/(:any)']               = 'UserController/$1/$2';
 $route['user/(:any)/(:any)/(:any)']        = 'UserController/$1/$2/$3';
 $route['user/(:any)/(:any)/(:any)/(:any)'] = 'UserController/$1/$2/$3/$4';
+
+/* SCIAL */
+$route['social_login']                             = 'SocialController/index';
+$route['social_login/(:any)']                      = 'SocialController/$1';
+$route['social_login/(:any)/(:any)']               = 'SocialController/$1/$2';
+$route['social_login/(:any)/(:any)/(:any)']        = 'SocialController/$1/$2/$3';
+$route['social_login/(:any)/(:any)/(:any)/(:any)'] = 'SocialController/$1/$2/$3/$4';
+
+/* ADMIN */
+$route['adm_kadooku']                             = 'AdminController/index';
+$route['adm_kadooku/(:any)']                      = 'AdminController/$1';
+$route['adm_kadooku/(:any)/(:any)']               = 'AdminController/$1/$2';
+$route['adm_kadooku/(:any)/(:any)/(:any)']        = 'AdminController/$1/$2/$3';
+$route['adm_kadooku/(:any)/(:any)/(:any)/(:any)'] = 'AdminController/$1/$2/$3/$4';

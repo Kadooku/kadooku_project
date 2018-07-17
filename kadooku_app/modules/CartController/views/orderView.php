@@ -13,6 +13,7 @@
 
 							<div class="row">
 								<div class="col-md-12 t-center">
+									<?php if($product->status == "pending" || $product->status == "canceled") :?>
 										<h5 class="judul-box">
 											<img src="<?=base_url('kadooku_assets/public/images/icons/clock.png');?>" class="p-r-5">
                                             <?php if(strtotime(date('Y-m-d G:i:s')) < strtotime($product->time_late)) : ?>
@@ -21,6 +22,12 @@
                                                 Canceled
                                             <?php endif;?>
 										</h5>
+									<?php else: ?>
+										<h5 class="judul-box" style="color: green">
+											<img src="<?=base_url('kadooku_assets/public/images/icons/clock.png');?>" class="p-r-5">
+                                            Payment Success
+										</h5>
+									<?php endif;?>
 								<div class="col-md-12 t-center p-b-20 s-text18">
 									Your order number : <?=$product->key;?>   <a href="<?=base_url('user/orders/detail/'.$product->key);?>" class="fs-15 p-l-5">  CHECK ORDER STATUS</a>
 								</div>
@@ -29,6 +36,7 @@
 							<div class="row justify-content-center">
 							<div class="col-md-12">
 								<div class="bo10">
+								<?php if($product->status == "pending" || $product->status == "canceled") :?>
 									<div class="s-text23 p-t-30 t-center">
 										The payment code will end on :
 									</div>
@@ -42,6 +50,11 @@
 									<div class="s-text24 p-b-50 t-center">
 										Please complete payment before <?=tanggal_indo($product->time_late)?>.
 									</div>
+								<?php else : ?>
+									<div class="s-text23 p-b-30 t-center">
+										&nbsp;
+									</div>
+								<?php endif;?>
 									
 									<div class="row justify-content-center p-b-50">
 										<div class="col-md-6 bo4 p-b-20 p-t-20">

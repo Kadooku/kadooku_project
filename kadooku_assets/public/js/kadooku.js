@@ -170,42 +170,51 @@ function loadMoreData(pages, p){
 // fungsi untuk set produk pada tag html
 function setProduct(data, pages){
     var output = "";
-    for (var i in data.result)
-    {
-        var cart = $('#cart').val();
-        var row  = data.result[i];
-        var d    = (new Date()).toISOString().substring(0, 10);
-        var label, price, newprice;
-        if(row.product_amount > 0){
-            if((row.discount != 0) && (d >= row.start_discount) && (d <= row.end_discount)){
-                    var dis      = Math.round((row.discount/100) * row.product_price);
-                    label    = 'block2-labelsale';
-                    price    = '<span class="block2-oldprice m-text7 p-r-5">'+convertToRupiah(parseInt(row.product_price))+'</span><span class="block2-newprice m-text8 p-r-5"><b>'+convertToRupiah(row.product_price - dis)+'</b></span>';
-                    newprice = row.product_price - dis;
-            }else{
-                label    = '';
-                price    = '<span class="block2-price m-text6 p-r-5">'+convertToRupiah(parseInt(row.product_price))+'</span>';
-                newprice = row.product_price;
-            }
-            var divs    = (pages == 'product') ? "col-sm-12 col-md-6 col-lg-4 p-b-50" : "col-sm-6 col-md-4 col-lg-3 p-b-50";
-            var img     = jQuery.parseJSON(row.product_image);
-            var img_url = base_url+"kadooku_uploads/product/img/"+img[0];
-            var title   = (row.product_name.length > 20) ? row.product_name.substring(0,20)+' ...' : row.product_name;
-            var p_img   = "<a href='"+base_url+"product_detail/"+row.product_url+"'><img width='300px' height='300px' src='"+base_url+"kadooku_assets/public/images/circle.gif' data-original='"+img_url+"' class='lazy'/></a>";
-            
-            output += '<div class="'+divs+' animated zoomIn">';
-            output += '    <div class="block2" style="border:2px solid #F5F5F5;background-color:#fff;">';
-            output += '        <div class="block2-img wrap-pic-w of-hidden pos-relative '+label+'">';
-            output += p_img;
-            output += '            <a href="'+base_url+'product_detail/'+row.product_url+'" class="block2-overlay trans-0-4">';                
-            output += '            </a>';
-            output += '        </div>';
-            output += '        <div class="block2-txt p-t-20 p-l-10 p-r-20 p-b-20">';
-            output += '            <a href="'+base_url+'product_detail/'+row.product_url+'" class="block2-name dis-block s-text3 p-b-10"><b>'+title+'</b></a>';
-            output += price;
-            output += '        <button class="add_to_cart flex-c-m size4 m-l-5 m-t-10 bg0 bo-rad-23 hov4 s-text1 trans-0-4" data-id="'+row.id+'" data-name="'+row.product_name+'" data-price="'+newprice+'">';
-            output += cart+'</button>';
-            output += '</div></div></div>';
+    
+    if(data.result.length > 0){
+        for (var i in data.result)
+        {
+            var cart = $('#cart').val();
+            var row  = data.result[i];
+            var d    = (new Date()).toISOString().substring(0, 10);
+            var label, price, newprice;
+                if(row.product_amount > 0){
+                    if((row.discount != 0) && (d >= row.start_discount) && (d <= row.end_discount)){
+                            var dis      = Math.round((row.discount/100) * row.product_price);
+                            label    = 'block2-labelsale';
+                            price    = '<span class="block2-oldprice m-text7 p-r-5">'+convertToRupiah(parseInt(row.product_price))+'</span><span class="block2-newprice m-text8 p-r-5"><b>'+convertToRupiah(row.product_price - dis)+'</b></span>';
+                            newprice = row.product_price - dis;
+                    }else{
+                        label    = '';
+                        price    = '<span class="block2-price m-text6 p-r-5">'+convertToRupiah(parseInt(row.product_price))+'</span>';
+                        newprice = row.product_price;
+                    }
+                    var divs    = (pages == 'product') ? "col-sm-12 col-md-6 col-lg-4 p-b-50" : "col-sm-6 col-md-4 col-lg-3 p-b-50";
+                    var img     = jQuery.parseJSON(row.product_image);
+                    var img_url = base_url+"kadooku_uploads/product/img/"+img[0];
+                    var title   = (row.product_name.length > 20) ? row.product_name.substring(0,20)+' ...' : row.product_name;
+                    var p_img   = "<a href='"+base_url+"product_detail/"+row.product_url+"'><img width='300px' height='300px' src='"+base_url+"kadooku_assets/public/images/circle.gif' data-original='"+img_url+"' class='lazy'/></a>";
+                    
+                    output += '<div class="'+divs+' animated zoomIn">';
+                    output += '    <div class="block2" style="border:2px solid #F5F5F5;background-color:#fff;">';
+                    output += '        <div class="block2-img wrap-pic-w of-hidden pos-relative '+label+'">';
+                    output += p_img;
+                    output += '            <a href="'+base_url+'product_detail/'+row.product_url+'" class="block2-overlay trans-0-4">';                
+                    output += '            </a>';
+                    output += '        </div>';
+                    output += '        <div class="block2-txt p-t-20 p-l-10 p-r-20 p-b-20">';
+                    output += '            <a href="'+base_url+'product_detail/'+row.product_url+'" class="block2-name dis-block s-text3 p-b-10"><b>'+title+'</b></a>';
+                    output += price;
+                    output += '        <button class="add_to_cart flex-c-m size4 m-l-5 m-t-10 bg0 bo-rad-23 hov4 s-text1 trans-0-4" data-id="'+row.id+'" data-name="'+row.product_name+'" data-price="'+newprice+'">';
+                    output += cart+'</button>';
+                    output += '</div></div></div>';
+                }
+        }
+    }
+    else{
+        if(pages != 'product'){
+            $("#btn-more").hide();
+            output += '<div class="col-md-12"><div class="sec-title p-b-22"><div class="s-text5 t-center">Data belum ada, mohon untuk muat ulang.</div></div></div>';
         }
     }
     

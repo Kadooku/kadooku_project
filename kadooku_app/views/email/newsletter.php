@@ -95,7 +95,7 @@
             <table border="0" cellspacing="0" cellpadding="0" width="640" align="center" summary="">
               <tr>
                 <td class="logoContainer">
-                    <img class="logo" src="<?='https://dummy-singlecoder.c9users.io/kadooku_project/kadooku_assets/public/images/logo/logo.png';?>" alt="Kadooku Indonesia" />
+                    <img class="logo" src="<?='https://kadooku.castcoding.web.id/kadooku_assets/public/images/logo/logo.png';?>" alt="Kadooku Indonesia" />
                 </td>
               </tr>
             </table>
@@ -125,7 +125,7 @@
                   <table border="0" cellpadding="0" cellspacing="0" width="200" summary="" class="card">
                     <tr>
                       <td class="sectionArticleImage" align="center">
-                        <img src="<?='https://dummy-singlecoder.c9users.io/kadooku_project/kadooku_uploads/product/img/'.$row['product_image'];?>" width="190" height="190" alt="" />
+                        <img src="<?='https://kadooku.castcoding.web.id/kadooku_uploads/product/img/'.$row['product_image'];?>" width="190" height="190" alt="" />
                       </td>
                     </tr>
                     <tr><td class="sectionArticleTitle" valign="top"><?=$row['product_name'];?></td></tr>
@@ -137,7 +137,7 @@
                     <tr>
                       <td class="buttonContainer">
                         <table border="0" cellpadding="0" cellspacing="0" summary="" align="center" width="50%">
-                          <tr><td class="button"><a href="<?=base_url('product_detail/'.$row['product_url']);?>" title="Lihat Produk">Lihat Produk</a></td></tr>
+                          <tr><td class="button"><a href="<?='https://kadooku.castcoding.web.id/product_detail/'.$row['product_url'];?>" title="Lihat Produk">Lihat Produk</a></td></tr>
                         </table>
                       </td>
                     </tr>  
@@ -169,7 +169,7 @@
                   <table border="0" cellpadding="0" cellspacing="0" width="200" summary="" class="card">
                     <tr>
                       <td class="sectionArticleImage" align="center">
-                        <img src="<?='https://dummy-singlecoder.c9users.io/kadooku_project/kadooku_uploads/product/img/'.$row['product_image'];?>"  width="190" height="190" alt="" />
+                        <img src="<?='https://kadooku.castcoding.web.id/kadooku_uploads/product/img/'.$row['product_image'];?>"  width="190" height="190" alt="" />
                       </td>
                     </tr>
                     <tr><td class="sectionArticleTitle" valign="top"><?=$row['product_name'];?></td></tr>
@@ -181,7 +181,7 @@
                     <tr>
                       <td class="buttonContainer">
                         <table border="0" cellpadding="0" cellspacing="0" summary="" align="center" width="50%">
-                          <tr><td class="button"><a href="<?=base_url('product_detail/'.$row['product_url']);?>" title="Lihat Produk">Lihat Produk</a></td></tr>
+                          <tr><td class="button"><a href="<?='https://kadooku.castcoding.web.id/product_detail/'.$row['product_url'];?>" title="Lihat Produk">Lihat Produk</a></td></tr>
                         </table>
                       </td>
                     </tr>  

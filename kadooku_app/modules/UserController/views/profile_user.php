@@ -4,15 +4,7 @@
 			<div class="row">
 				<div class="col-md-4 p-b-25">
 					<div class="bo5 p-r-20 p-l-20 p-t-20 p-b-20">
-						<center>
-                            <img src="<?=(!$user->isSocialLogin) ? $sess['profile_picture'] : 
-                                    ($user->social_login == 'facebook' ? 
-                                    "https://graph.facebook.com/{$user->oauth_uid}/picture?width=480&height=480" : 
-                                    $user->profile_picture);?>" width="200" height="200" class="rounded-circle">
-							<h4 class="m-text14 p-b-7">
-								<?=$user->full_name;?>
-							</h4>
-						</center>
+					
 	
 						<?=$this->load->view('sidebar');?>
 					</div>

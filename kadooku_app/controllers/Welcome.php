@@ -20,12 +20,24 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('email/newsletter');
+		$data = [
+			'product' => "",
+			'nama'    => "RANGGA DL"
+		];
+		$this->load->view('email/product_layout', $data);
 	}
 
-	public function sendemail()
+	public function cancel_transaction()
 	{
-		$this->load->model('Email_model');
-        $this->Email_model->sendMail('djatikusumadata@gmail.com');
+		$this->load->model("CronModel");
+		$getTransaction = $this->CronModel->read()->result();
+		$data = array(
+			"status" => "canceled"
+		);
+		foreach($getTransaction as $transaction){
+			if($this->CronModel->update($data, array('id' => $transaction->id))){
+				print "Berhasil updated \n";
+			}
+		}
 	}
 }

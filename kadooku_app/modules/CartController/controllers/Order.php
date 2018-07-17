@@ -26,7 +26,7 @@ class Order extends CI_Controller {
         $getProduct = $this->CartModel->getProductByKey($orderId, $getUser->id);
 
         if(count($getProduct) < 1)
-            redirect('user/order','refresh');
+            redirect('user/orders','refresh');
             
 
         $data = [
