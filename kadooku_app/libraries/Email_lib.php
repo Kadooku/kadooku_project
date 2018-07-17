@@ -16,8 +16,8 @@ class Email_lib {
         $config['protocol']  = "smtp";
         $config['smtp_host'] = "ssl://smtp.gmail.com";
         $config['smtp_port'] = "465";
-        $config['smtp_user'] = "testdatarangga@gmail.com";
-        $config['smtp_pass'] = "lukman051097";
+        $config['smtp_user'] = "ISI EMAIL";
+        $config['smtp_pass'] = "ISI PASSWORD";
         $config['charset']   = "utf-8";
         $config['mailtype']  = "html";
         $config['newline']   = "\r\n";

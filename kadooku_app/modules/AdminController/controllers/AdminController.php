@@ -7,16 +7,17 @@ class AdminController extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $sess = $this->session->userdata('adminData');
-        // Cek Status Login
-        if(!$sess['isAdmin'] && !$sess['isLogin']){ 
-            redirect(base_url('adm_kadooku/login'),'refresh');
-        }
+        
     }
     
 
     public function index()
     {
+        $sess = $this->session->userdata('adminData');
+        // Cek Status Login
+        if(!$sess['isAdmin'] && !$sess['isLogin']){ 
+            redirect(base_url('adm_kadooku/login'),'refresh');
+        }
         $this->template->load('backend/template', 'dashboard');
     }
 
