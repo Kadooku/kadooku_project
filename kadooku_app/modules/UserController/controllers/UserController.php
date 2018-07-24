@@ -115,7 +115,7 @@ class UserController extends CI_Controller {
 		}
     }
     
-    public function login(){
+    public function login($redirect = NULL){
 		$this->load->library('form_validation');
 		$input = $this->input->post(NULL,TRUE);
 		$this->username_temp = @$input['username'];
@@ -131,7 +131,7 @@ class UserController extends CI_Controller {
 		else{
 			$this->load->library('session');
             $this->load->model('UserModel');
-            
+            $redirectUrl = !is_null($redirect) ? $redirect : "";
             $getUser = $this->UserModel->getUserDetailByUsername($input['username']);
 			$login_data = array(
                 'full_name'       => $getUser->full_name,
@@ -144,7 +144,7 @@ class UserController extends CI_Controller {
 
 			$this->session->set_userdata('userData', $login_data);
 
-			redirect(base_url());
+			redirect(base_url($redirect));
 		}
 		
 	}

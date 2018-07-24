@@ -42,10 +42,12 @@ if($("#select_status").find('option:selected').val() === "sent") $('#tracking_nu
 else $('#tracking_number').hide();
 
 
-// Fungsi Datatable 
+// Fungsi Datatable
+if(path.search('category') > 0){ 
     $("#category").DataTable({
         "ordering": false
     });
+}
 
 
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -164,6 +166,11 @@ else $('#tracking_number').hide();
     });
     $("#upload-image-3").change(function () {
         showThumbnail(this, '#thumbnail-3');
+    });
+
+    $(this).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
     });
 });
 

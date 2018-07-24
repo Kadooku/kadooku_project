@@ -6,6 +6,7 @@ class TransactionModel extends CI_Model {
     protected $table     = "transactions";
     protected $product   = "products";
     protected $t_product = "transactions_products";
+    protected $confirm   = "transactions_confirms";
     protected $t_user    = "users";
 
     var $pk         = 'id';
@@ -87,6 +88,24 @@ class TransactionModel extends CI_Model {
 
 		if($query->num_rows() > 0){
 			$data = $query->result();
+			$query->free_result();
+		}
+		else{
+			$data = NULL;
+		}
+
+		return $data;
+	}
+	
+	public function getTransactionConfirm($key){
+		$this->db->select('t.*, tc.featured_image, tc.created, tc.updated')
+				 ->from("transactions_confirms tc")
+				 ->join("transactions t", "t.id = tc.transaction_id")
+		         ->where("t.key", $key);
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			$data = $query->row();
 			$query->free_result();
 		}
 		else{

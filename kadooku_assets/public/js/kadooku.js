@@ -467,6 +467,52 @@ function get_cost(id){
         })
     });
 
+
+    // Fungsi Konfirmasi Pesanan
+    
+    $(this).on("click", "#button-confirm", function(){
+        var formHtml = "";
+        var key = $(this).data("key");
+            formHtml += '<div class="col-md-12">';
+            formHtml += '<form action="'+base_url+'user/orders/confirm/'+key+'" enctype="multipart/form-data" method="POST"><div id="upload-1">';
+            formHtml += '            <div id="thumbnail-1">';
+            formHtml += '               <img class="img-responsive img-rounded img-thumbnail" width="180" height="240" src="http://localhost/kadooku_project/kadooku_uploads/product/img/default.jpg"/>';
+            formHtml += '           </div>';
+            formHtml += '       </div>';
+
+            formHtml += '<div class="input-group" style="margin-top:5px">';
+            formHtml += '     <span class="input-group-btn">';
+            formHtml += '       <span class="btn btn-danger btn-file">';
+            formHtml += '          Browse';
+            formHtml += '       <input type="file" id="upload-confirm" name="featured_image">';
+            formHtml += '       </span>';
+            formHtml += '     </span>';
+            formHtml += '</div>';
+            formHtml += '<button type="submit" class="p-t-10 btn btn-success">Konfirmasi</button></form>';
+
+            
+            
+            $("#form-confirm").fadeOut("fast", function(){
+                $(this).empty();
+            });
+            $("#form-confirm").fadeIn("fast", function(){
+                $(this).append(formHtml);
+            });
+    });
+
+    function showThumbnail(files, thumb) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $(thumb).empty();
+            $(thumb).append('<img class="img-responsive img-rounded img-thumbnail" width="180" height="240" src="'+e.target.result+'"/>');
+        }
+        reader.readAsDataURL(files.files[0]);
+        console.log(thumb);
+    }
+    $(this).on("change", "#upload-confirm", function () {
+        showThumbnail(this, '#thumbnail-1');
+    });
+
     // Fungsi Edit Address
     $(this).on("click", "#add-address", function(){
         $('.bd-address-modal-lg').modal('show');

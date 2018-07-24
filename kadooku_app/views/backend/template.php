@@ -20,6 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>custom/select2/dist/css/select2.min.css" type="text/css" />
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>custom//select2/dist/css/select2-bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="<?=base_url('kadooku_assets/admin/');?>css/custom.css?_=<?=time('YmdGis');?>" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" type="text/css" />
   <style type="text/css">
     .clearfix-padding{
       padding-top: 10px;
@@ -148,6 +149,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <script src="<?=base_url('kadooku_assets/admin/');?>libs/jquery/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>libs/jquery/plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>js/app.js?_=<?=time('YmdGis');?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 <script src="<?=base_url('kadooku_assets/admin/');?>js/custom.js?_=<?=time('YmdGis');?>"></script>
       
 

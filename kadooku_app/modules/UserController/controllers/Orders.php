@@ -60,6 +60,55 @@ class Orders extends CI_Controller {
             
         }
     }
+
+    public function confirm($key = NULL)
+    {
+        if($key == null) redirect(base_url('user/orders'),'refresh');
+
+        $sess = $this->session->userdata('userData');
+        // Cek Status Login
+        if(!$sess['login_status']){ 
+            redirect(base_url('user/login'),'refresh');
+        }
+        
+        $this->load->model(array("UserModel", "OrderModel"));        
+        $this->load->model("OrderModel");
+        $user     = $this->UserModel->getUserDetailByUsername($sess['username']);
+        $getOrder = $this->OrderModel->getOrderDetail($key, $user->id);
+
+        //upload
+        $config['upload_path']   = './kadooku_uploads/confirm/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size']      = '100000';
+        $config['encrypt_name']  = TRUE;
+        
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $data = [
+            "transaction_id" => $getOrder[0]->id,
+            "user_id"        => $user->id,
+            "created"        => date("Y-m-d G:i:s")
+        ];
+        if(!empty($_FILES['featured_image']['name'])){
+            if(!$this->upload->do_upload('featured_image'))
+            {
+                redirect(base_url('user/orders/detail/'.$key),'refresh');
+            }
+            else{
+                $file     = $this->upload->data();
+                $file_img = !empty($file['file_name']) ? $file['file_name'] : "default.jpg";
+                $data['featured_image'] = $file_img;
+
+                if($this->OrderModel->changeStatusPaid($key)) {
+                    if($this->OrderModel->insertConfirm($data)) redirect(base_url('user/orders/detail/'.$key),'refresh');
+                    else redirect(base_url('user/orders/detail/'.$key),'refresh');
+                }
+                else redirect(base_url('user/orders/detail/'.$key),'refresh');
+            }
+        }else {
+            redirect(base_url('user/orders/detail/'.$key),'refresh');
+        }
+    }
 }
 
 /* End of file Orders.php */

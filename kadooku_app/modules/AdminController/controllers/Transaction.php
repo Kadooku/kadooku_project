@@ -45,7 +45,8 @@ class Transaction extends CI_Controller {
             $data = [
                 'transaction' => $getTransaction,
                 'payment'     => $this->TransactionModel->getPayment($getTransaction[0]->payment_method),
-                'address'     => $this->TransactionModel->getAddressById($getTransaction[0]->address_id)
+                'address'     => $this->TransactionModel->getAddressById($getTransaction[0]->address_id),
+                'confirms'    => $this->TransactionModel->getTransactionConfirm($key)
             ];
 
             $this->template->load('backend/template', 'transaction/transaction_edit', $data);
@@ -83,8 +84,8 @@ class Transaction extends CI_Controller {
 
         $option = array(
             'table'         => 'transactions',
-            'column_search' => array(null, 'key','order_time','price_total','status'),
-            'column_order'  => array('key','order_time','price_total','status'),
+            'column_search' => array('status'),
+            'column_order'  => array(NULL,'order_time','price_total','status'),
             'order'         => array('order_time' => 'desc')
         );
         $getData = $this->DatatableModel->get_datatables($option);
@@ -112,6 +113,11 @@ class Transaction extends CI_Controller {
                 );
         //output to json format
         echo json_encode($output);
+    }
+
+    public function getTransaction($key)
+    {
+        printData($this->TransactionModel->getTransactionConfirm($key));
     }
 
 }

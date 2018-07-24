@@ -70,6 +70,7 @@ class Checkout extends CI_Controller {
                             'random_number' => $rand['cart_session']['random'],
                             'key'           => "KADOOKU".date("Ymd").$getUser->id.time(),
                             'time_late'     => date('Y-m-d G:i:s', strtotime("+1 days")),
+                            'order_time'    => date('Y-m-d G:i:s'),
                             'payment_method'=> $rand['cart_session']['payment_method']
                         ];
                         $this->saveProduct($data, $this->cart->contents());
@@ -91,6 +92,7 @@ class Checkout extends CI_Controller {
                             'random_number' => $rand['cart_session']['random'],
                             'key'           => "KADOOKU".date("Ymd").$getUser->id.time(),
                             'time_late'     => date('Y-m-d G:i:s', strtotime("+1 days")),
+                            'order_time'    => date('Y-m-d G:i:s'),
                             'payment_method'=> $rand['cart_session']['payment_method']
                         ];
 

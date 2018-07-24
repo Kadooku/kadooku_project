@@ -89,7 +89,19 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-offset-2 col-md-8">
-                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="select_status">Bukti Transaksi</label><br>
+                            <?php if(count($confirms) > 0) :?>
+                            <a href="<?=base_url('kadooku_uploads/confirm/'.$confirms->featured_image);?>" data-toggle="lightbox" data-title="Invoice : #<?=$confirms->key;?>" data-footer="Dikirim pada : <?=tanggal_indo($confirms->created);?>">
+                                <img src="<?=base_url('kadooku_uploads/confirm/'.$confirms->featured_image);?>" 
+                                    class="img-responsive img-thumbnail img-fluid"
+                                    width="250" height="250">
+                            </a>
+                            <?php else :?>
+                            <div class="alert alert-warning">Belum ada bukti yang dikirimkan</div>
+                            <?php endif;?>
+                        </div>
+                        <div class="form-group">
                             <label for="select_status">Ubah Status Transaksi</label>
                             <select name="status" id="select_status" class="form-control">
                                 <?php

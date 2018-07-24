@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class OrderModel extends CI_Model {
 
     protected $table     = "transactions";
+    protected $confirm   = "transactions_confirms";
     protected $product   = "products";
     protected $t_product = "transactions_products";
 
@@ -68,7 +69,30 @@ class OrderModel extends CI_Model {
     public function getPayment($id)
     {
         return $this->db->get_where('payment_method', array('id' => $id))->row();
-    }
+	}
+	
+	public function changeStatusPaid($key = NULL)
+	{
+		$data = array('status' => 'paid');
+
+		$this->db->where('key', $key);
+		$this->db->set($data);
+		if($this->db->update($this->table, $data)){
+            return true;
+        }else{
+            return false;
+        }
+	}
+
+	public function insertConfirm($data = NULL)
+	{
+		if($data != NULL){
+        	$this->db->insert($this->confirm, $data);
+            return true;
+        }else{
+            return false;
+        }
+	}
 
 }
 

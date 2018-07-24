@@ -1,9 +1,9 @@
 <center>
-    <img src='<?=base_url("kadooku_assets/public/images/circle.gif");?>' class='lazy'
+    <img src='<?=base_url("kadooku_assets/public/images/circle.gif");?>' class='lazy rounded-circle'
     data-original="<?=(!$user->isSocialLogin) ? $sess['profile_picture'] : 
             ($user->social_login == 'facebook' ? 
             "https://graph.facebook.com/{$user->oauth_uid}/picture?width=480&height=480" : 
-            $user->profile_picture);?>" width="200" height="200" class="rounded-circle">
+            $user->profile_picture);?>" width="200" height="200">
     <h4 class="m-text14 p-b-7">
         <?=$user->full_name;?>
     </h4>

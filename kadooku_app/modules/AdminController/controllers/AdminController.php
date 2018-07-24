@@ -13,12 +13,21 @@ class AdminController extends CI_Controller {
 
     public function index()
     {
+        $this->load->model("HomeModel");
         $sess = $this->session->userdata('adminData');
         // Cek Status Login
         if(!$sess['isAdmin'] && !$sess['isLogin']){ 
             redirect(base_url('adm_kadooku/login'),'refresh');
         }
-        $this->template->load('backend/template', 'dashboard');
+
+        $data = [
+            "users"        => $this->HomeModel->countData(),
+            "products"     => $this->HomeModel->countData("products"),
+            "categories"   => $this->HomeModel->countData("categories"),
+            "transactions" => $this->HomeModel->countData("transactions")
+        ];
+
+        $this->template->load('backend/template', 'dashboard', $data);
     }
 
     public function sendemail()
